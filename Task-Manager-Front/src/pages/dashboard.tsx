@@ -107,7 +107,7 @@ export default function Dashboard(){
 
                     <button 
                         onClick={() =>setShowForm(true)}
-                        className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700  transition hover:scale-110">
+                        className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700  transition hover:scale-110 mx-2">
                         + New Task
                     </button>
                     {/**Sort feature */}
