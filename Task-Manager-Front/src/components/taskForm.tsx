@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Task } from "../types/task";
 import { Priority } from "../types/priority";
+import { Status } from "../types/status";
 
 interface TaskFormProps{
     onSubmit: (task:Omit<Task,"id">) => void;
@@ -22,7 +23,7 @@ export default function TaskForm({onSubmit,onClose,initialTask}: TaskFormProps){
 
     function handleSubmit(e:React.FormEvent){
         e.preventDefault();
-        onSubmit({title,description,completed:initialTask?.completed ?? false,priority});
+        onSubmit({title,description,status: Status.PENDING ,priority});
         onClose();
     }
 

@@ -20,7 +20,5 @@ export function getPriorityBg(priority : Priority): string {
             return "bg-white";
         default:
             return "bg-white"
-
-        
     }
 }

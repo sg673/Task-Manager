@@ -52,7 +52,6 @@ export default function Dashboard(){
 
     }
 
-    // amazonq-ignore-next-line
     function formatDesc(desc : string) : string{
         if(desc){
             return (desc.length > MAX_DESC_LENGTH) ? desc.slice(0,MAX_DESC_LENGTH) + "..." : desc;
@@ -70,7 +69,6 @@ export default function Dashboard(){
     function handleCreateTask(task:Omit<Task,"id">) {
         const newTask : Task = {
             ...task,
-            // amazonq-ignore-next-line
             id: crypto.randomUUID(), // USE BACKEND ID WHEN MADE
         };
         setTasks((prev) => [...prev,newTask]);
@@ -151,14 +149,12 @@ export default function Dashboard(){
                                     </div>
                                     
                                     <div className="mt-auto flex items-center justify-between">
-                                        <label className="inline-flex items-center gap-2 text-sm text-gray-700">
-                                            <input
-                                                type="checkbox"
-                                                checked={task.completed}
-                                                className="w-4 h-4"
-                                                readOnly
-                                            />
-                                        </label>
+                                    
+                                            <p className="text-xs text-gray-500 mb-1 mx-1 italic">
+                                                {task.status as string }
+                                            </p>
+                                           
+                                        
                                         <div className="flex gap-2">
                                             <button
                                                 className="px-3 py-1 bg-blue-600 text-white text-sm rounded-lg hover:bg-blue-700 transition hover:scale-105"
