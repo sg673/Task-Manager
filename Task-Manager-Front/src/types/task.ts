@@ -1,10 +1,11 @@
 import { Priority } from "./priority";
+import { Status } from "./status";
 
 export interface Task{
     id: string;
     title: string;
     description?: string;
-    completed: boolean;
+    status: Status;
     priority : Priority
     dueDate?: string; // ISO format
     projectId?: string;
