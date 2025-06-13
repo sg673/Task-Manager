@@ -80,7 +80,7 @@
 ## Current Todo List
 
 - [ ] Complete task properties implementation
-  - [ ] Add due date functionality to TaskForm
+  - [x] Add due date functionality to TaskForm
   - [ ] Implement status toggling (ToDo/Complete) in TaskCard
   - [ ] Add task completion functionality
 
