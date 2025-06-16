@@ -13,7 +13,7 @@ function App() {
     <BrowserRouter>
       <Navbar/>
       <Toaster position='top-right' toastOptions={{duration:2000}}/>
-      <Dashboard></Dashboard>
+      <Dashboard/>
     </BrowserRouter>
     </>
   )

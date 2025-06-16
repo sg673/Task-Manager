@@ -58,17 +58,17 @@ export default function TaskForm({onSubmit,onClose,initialTask}: TaskFormProps){
                 <label className="block mb-4">
                     <span className="text-sm text-gray-700 font-semibold mb-1 block">Priority</span>
                     <div className="flex flex-wrap gap-2 px-6">
-                        {priorityOptions.map((opt) => (
+                       {Object.values(Priority).map((priorityValue) => (
                             <button
-                                key = {opt.value}
+                                key={priorityValue}
                                 type="button"
                                 className={`px-3 py-1.5 text-sm rounder border transition ${
-                                    priority === opt.value ?
+                                    priority === priorityValue ?
                                     "bg-blue-600 text-white border-blue-600" :
                                     "bg-white text-gray-700 border-gray-300 hover:bg-gray-100"
                                 }`}
-                                onClick={() => setPriority(opt.value)}
-                            >{opt.label}</button>
+                                onClick={() => setPriority(priorityValue)}
+                            >{priorityValue}</button>
                         ))}
                     </div>
 
