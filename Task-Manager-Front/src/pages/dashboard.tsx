@@ -1,7 +1,7 @@
 import { useEffect,useState } from "react";
 import  { SortKey, Task } from "../types/task";
 import { Priority,getPriorityBg } from "../types/priority";
-import { getTasks } from "../services/api";
+import { addTask, deleteTask, getTasks, updateTask } from "../services/api";
 import TaskForm from "../components/taskForm";
 import { toast } from "react-hot-toast";
 import { MAX_DESC_LENGTH, MAX_TITLE_LENGTH } from "../types/constants";
@@ -29,7 +29,7 @@ export default function Dashboard(){
 
         }
         fetchTasks();
-    },[]);
+    },[tasks]);
 
     function sortedTasks(): Task[]{
         const priorityOrder = Object.values(Priority);
@@ -66,33 +66,44 @@ export default function Dashboard(){
         return ""
     }
 
-    function handleCreateTask(task:Omit<Task,"id">) {
+    async function handleCreateTask(task:Omit<Task,"id">) {
         const newTask : Task = {
             ...task,
             id: crypto.randomUUID(), // USE BACKEND ID WHEN MADE
         };
-        setTasks((prev) => [...prev,newTask]);
-        toast.success("Task Created!")
+        return await addTask(newTask) ? toast.success("Task Created!") : toast.error("Failed to create task");
+        //setTasks([...prev,newTask])
     }
 
-    function handleDeleteTask(id : string){
-        try {
+    async function handleDeleteTask(id : string){
+        
+        setTasks(tasks.filter((t) => t.id !== id))
+        await deleteTask(id) ? toast.success("Task deleted successfully") : toast.error("Failed to delete task");
+        return 
+        /*try {
             setTasks(tasks.filter((t) => t.id !== id));
             toast.success("Task deleted successfully");
         } catch (error) {
             console.error("Failed to delete task", error);
             toast.error("Failed to delete task");
-        }
+        }*/
     }
-    const handleUpdateTask = (updatedTask : Task) => {
+    
+    async function handleUpdateTask(task:Task){
+        await updateTask(task) ? toast.success("Task updated successfully") : toast.error("Failed to update task");
+        setEditingTask(null);
+        return
+    }
+    
+    /*const handleUpdateTask = (updatedTask : Task) => {
         setTasks((prev) => 
 
         prev.map((task) => (task.id === updatedTask.id ? updatedTask : task))
         );
         setEditingTask(null);
-    };
+    };*/
     
-    // amazonq-ignore-next-line
+
     return(
         <div className="min-h-screen bg-gray-100 p-6">
             <div className="max-w-4x1 mx-auto">

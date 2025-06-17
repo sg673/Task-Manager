@@ -127,7 +127,7 @@ export default function TaskForm({onSubmit,onClose,initialTask}: TaskFormProps){
                                     </div>
                                     
                                     {/* Fade effect at bottom */}
-                                    <div className="sticky bottom-0 h-6 bg-gradient-to-t from-white to-transparent pointer-events-none z-10"></div>
+                                    <div className="sticky bottom-0 h-8 bg-gradient-to-t from-white to-transparent pointer-events-none z-10"></div>
                                 </div>
                             )}
                         </div>
