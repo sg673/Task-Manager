@@ -45,26 +45,30 @@ export default function Navbar(){
                 </div>
 
                 {/**navlinks mobile (hamburder) */}
-                <button
-                    onClick={toggleMenu}
-                    className="md:hidden text-gray-600 focus:outline-none"
-                >{menuOpen ? <X size={24}/> : <Menu size={24}/>}</button>
-                {menuOpen && (
-                    <div className="md:hidden mt-2 space-y-2 px-4 pb-4">
-                        {navLinks.map((link) => (
-                            <Link
-                                key={link.path}
-                                to={link.path}
-                                onClick={()=> setMenuOpen(false)}
-                                className={`block text-sm font-medium ${location.pathname === link.path ? "text-blue-600" : "text-gray-700 hover:text-blue-500"}`}
-                            >{link.label}</Link>
-                        ))}
-                        <button
-                            className="block text-left text-sm w-full bg-gray-100 hover:bg-gray-200 px-3 py-1.5 rounded"
-                            onClick={() => setMenuOpen(false)}
-                        >Logout</button>
-                    </div>
-                )}
+                <div className="relative">
+                    <button
+                        onClick={toggleMenu}
+                        className="md:hidden text-gray-600 focus:outline-none"
+                    >
+                        {menuOpen ? <X size={24}/> : <Menu size={24}/>}
+                    </button>
+                    {menuOpen && (
+                        <div className="absolute right-0 top-11 bg-white shadow-md rounded-md md:hidden mt-2 space-y-2 px-4 pb-4 w-48">
+                            {navLinks.map((link) => (
+                                <Link
+                                    key={link.path}
+                                    to={link.path}
+                                    onClick={()=> setMenuOpen(false)}
+                                    className={`block text-sm font-medium ${location.pathname === link.path ? "text-blue-600" : "text-gray-700 hover:text-blue-500"}`}
+                                >{link.label}</Link>
+                            ))}
+                            <button
+                                className="block text-left text-sm w-full bg-gray-100 hover:bg-gray-200 px-3 py-1.5 rounded"
+                                onClick={() => setMenuOpen(false)}
+                            >Logout</button>
+                        </div>
+                    )}
+                </div>
             </div>
         </nav>
 
