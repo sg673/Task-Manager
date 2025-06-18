@@ -1,6 +1,7 @@
 import { Task } from "../types/task";
 import { Priority } from "../types/priority";
 import { Status } from "../types/status";
+import { User } from "../types/user";
 
 //MOCK API TO SIMULATE DATA
 const mockTasks: Task[] = [
@@ -20,6 +21,18 @@ const mockTasks: Task[] = [
         dueDate: "2025-06-29T00:30:00.000Z"
     },
 ];
+
+const mockUser: User = {
+  id: "1",
+  username: "johndoe",
+  email: "john.doe@example.com",
+  password: "XXXXXXXXXXX",
+  firstName: "John",
+  lastName: "Doe",
+  avatar: "https://via.placeholder.com/150",
+  bio: "Task management enthusiast",
+  createdAt: "2023-01-15T00:00:00.000Z"
+};
 
 //MOCK API CALLS
 //800ms delay added to all returns to simulate network delay
@@ -58,4 +71,17 @@ export async function deleteTask(taskId: string): Promise<boolean> {
         }
         setTimeout(() => resolve(false), 800);
     })
+}
+
+//User calls
+export async function getUser(): Promise<User> {
+    return new Promise((resolve) => {
+        setTimeout(() => resolve(mockUser), 800);
+    });
+}
+export async function updateUser(updatedUser: User): Promise<boolean> {
+    return new Promise((resolve) => {
+       Object.assign(mockUser, updatedUser);
+        setTimeout(() => resolve(true), 800);
+    });
 }
