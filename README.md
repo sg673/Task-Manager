@@ -33,7 +33,7 @@ Task-Manager is a responsive web application designed to help individuals and te
 - **UI Components**: Custom components with Lucide icons
 
 ## Getting Started
-
+1. Install [Node.js](https://nodejs.org/en)
 1. Clone the repository
 2. Navigate to the Task-Manager-Front directory
 3. Install dependencies with `npm install`
