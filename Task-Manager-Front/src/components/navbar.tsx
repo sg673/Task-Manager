@@ -4,8 +4,9 @@ import { Menu,X } from "lucide-react";
 import { useState } from "react";
 
 const navLinks = [
-    {label: "Dashboard", path:"/"},
-    {label: "Projects", path:"/projects"}
+    {label: "Dashboard", path:"/dashboard"},
+    {label: "Projects", path:"/projects"},
+    {label: "Profile", path:"/profile"}
 ];
 
 export default function Navbar(){
@@ -44,7 +45,7 @@ export default function Navbar(){
                      >Logout</button>
                 </div>
 
-                {/**navlinks mobile (hamburder) */}
+                {/**navlinks mobile (hamburger) */}
                 <div className="relative">
                     <button
                         onClick={toggleMenu}

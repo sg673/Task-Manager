@@ -13,6 +13,8 @@ export default function Profile(){
             }
             catch(error){
                 console.error("Failed to load profile", error);
+                
+                
             }
         }
 

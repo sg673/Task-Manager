@@ -63,7 +63,7 @@ export default function Dashboard(){
         if(title){
             return (title.length > MAX_TITLE_LENGTH) ? title.slice(0,MAX_TITLE_LENGTH) + "..." : title;
         }
-        return ""
+        return "";
     }
 
     async function handleCreateTask(task:Omit<Task,"id">) {
@@ -76,10 +76,10 @@ export default function Dashboard(){
     }
 
     async function handleDeleteTask(id : string){
-        
         setTasks(tasks.filter((t) => t.id !== id))
+        // eslint-disable-next-line @typescript-eslint/no-unused-expressions
         await deleteTask(id) ? toast.success("Task deleted successfully") : toast.error("Failed to delete task");
-        return 
+        return;
         /*try {
             setTasks(tasks.filter((t) => t.id !== id));
             toast.success("Task deleted successfully");
@@ -90,9 +90,10 @@ export default function Dashboard(){
     }
     
     async function handleUpdateTask(task:Task){
+        // eslint-disable-next-line @typescript-eslint/no-unused-expressions
         await updateTask(task) ? toast.success("Task updated successfully") : toast.error("Failed to update task");
         setEditingTask(null);
-        return
+        return;
     }
     
     /*const handleUpdateTask = (updatedTask : Task) => {
@@ -116,7 +117,7 @@ export default function Dashboard(){
 
                     <button 
                         onClick={() =>setShowForm(true)}
-                        className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700  transition hover:scale-110 mx-2">
+                        className="px-4 py-2 mx-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 hover:scale-110 transition">
                         + New Task
                     </button>
                     {/**Sort feature */}
@@ -160,12 +161,9 @@ export default function Dashboard(){
                                     </div>
                                     
                                     <div className="mt-auto flex items-center justify-between">
-                                    
                                             <p className="text-xs text-gray-500 mb-1 mx-1 italic">
                                                 {task.status as string }
                                             </p>
-                                           
-                                        
                                         <div className="flex gap-2">
                                             <button
                                                 className="px-3 py-1 bg-blue-600 text-white text-sm rounded-lg hover:bg-blue-700 transition hover:scale-105"
