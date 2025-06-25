@@ -121,9 +121,16 @@
   - [ ] Add search functionality
   - [x] Implement task filtering by due date
   - [ ] Add task tags/labels
-  - [ ] Create task priority visualization
+  - [x] Create task priority visualization
 
 - [ ] Setup testing
   - [ ] Add unit tests for components
   - [ ] Implement integration tests
   - [ ] Create test data fixtures
+
+- [ ] Beautification
+  - [ ] Add spinners to loading screens
+
+## Known Issues
+ - task form priorities do not display correctly when on small screens
+ - On task form, None highlights gray when another priority is highlighted
