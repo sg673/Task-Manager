@@ -7,6 +7,7 @@ import { Priority } from "../types/priority";
 import { Status } from "../types/status";
 import { SortKey } from "../types/task";
 import '@testing-library/jest-dom/vitest';
+import TaskForm from "../components/taskForm";
 
 // Mock the API
 vi.mock("../services/api");
@@ -199,6 +200,20 @@ describe("Dashboard", () => {
     expect(sortSelect).toHaveValue(SortKey.Priority);
   });
 
+  it("formats long descriptions with ellipsis", async () => {
+    const longDescriptionTask = {
+      ...mockTasks[0],
+      description: "This is a very long description that should be truncated with ellipsis",
+    };
+    vi.mocked(getTasks).mockResolvedValue([longDescriptionTask]);
+    
+    render(<Dashboard />);
+    
+    await waitFor(() => {
+      expect(screen.getByText(/This is a very long description/)).toBeInTheDocument();
+    });
+  });
+
   it("formats long titles with ellipsis", async () => {
     const longTitleTask = {
       ...mockTasks[0],
@@ -222,6 +237,133 @@ describe("Dashboard", () => {
     });
   });
 
+  it("creates a new task when form is submitted", async () => {
+    render(<Dashboard />);
+    
+    const newTaskButton = screen.getByText("+ New Task");
+    await user.click(newTaskButton);
+    
+    const titleInput = screen.getByPlaceholderText("Task Title");
+    const descriptionInput = screen.getByPlaceholderText("Task Description");
+    
+    await user.type(titleInput, "New Task");
+    await user.type(descriptionInput, "New task description");
+    
+    const submitButton = screen.getByText("Create");
+    await user.click(submitButton);
+    
+    expect(addTask).toHaveBeenCalledWith({
+      title: "New Task",
+      description: "New task description",
+      dueDate: undefined,
+      id: expect.any(String),
+      status: Status.PENDING,
+      priority: Priority.None,
+    });
+  });
+
+  it("updates a task when edit form is submitted", async () => {
+    render(<Dashboard />);
+    
+    await waitFor(() => {
+      expect(screen.getAllByText("Edit")).toHaveLength(2);
+    });
+    
+    const editButtons = screen.getAllByText("Edit");
+    await user.click(editButtons[0]);
+    
+    const titleInput = screen.getByPlaceholderText("Task Title");
+    const descriptionInput = screen.getByPlaceholderText("Task Description");
+    
+    await user.clear(titleInput);
+    await user.type(titleInput, "Updated Task 1");
+    await user.clear(descriptionInput);
+    await user.type(descriptionInput, "Updated description 1");
+    
+    const submitButton = screen.getByText("Save Changes");
+    await user.click(submitButton);
+    
+    expect(updateTask).toHaveBeenCalledWith({
+      id: "1",
+      title: "Updated Task 1",
+      description: "Updated description 1",
+      dueDate: "2025-12-31T23:59:00.000Z",
+      status: Status.PENDING,
+      priority: Priority.High,
+    });
+  });
+
+
+  it("opens time selector when time button is clicked", async () => {
+    const mockOnSubmit = vi.fn();
+    const mockOnClose = vi.fn();
+    const user = userEvent.setup();
+    
+    render(<TaskForm onSubmit={mockOnSubmit} onClose={mockOnClose} />);
+    
+    const timeButton = screen.getByText("Select time");
+    await user.click(timeButton);
+    
+    expect(screen.getByText("00:00")).toBeInTheDocument();
+    expect(screen.getByText("12:30")).toBeInTheDocument();
+  });
+
+  it("selects time and closes dropdown", async () => {
+    const mockOnSubmit = vi.fn();
+    const mockOnClose = vi.fn();
+    const user = userEvent.setup();
+    
+    render(<TaskForm onSubmit={mockOnSubmit} onClose={mockOnClose} />);
+    
+    const timeButton = screen.getByText("Select time");
+    await user.click(timeButton);
+    
+    const timeOption = screen.getByText("09:30");
+    await user.click(timeOption);
+    
+    expect(screen.getByText("09:30")).toBeInTheDocument();
+    expect(screen.queryByText("00:00")).not.toBeInTheDocument();
+  });
+
+  it("closes time selector when clicking outside", async () => {
+    const mockOnSubmit = vi.fn();
+    const mockOnClose = vi.fn();
+    const user = userEvent.setup();
+    
+    render(<TaskForm onSubmit={mockOnSubmit} onClose={mockOnClose} />);
+    
+    const timeButton = screen.getByText("Select time");
+    await user.click(timeButton);
+    
+    expect(screen.getByText("00:00")).toBeInTheDocument();
+    
+    // Click outside the time selector
+    await user.click(document.body);
+    
+    await waitFor(() => {
+      expect(screen.queryByText("00:00")).not.toBeInTheDocument();
+    });
+  });
+
+  it("displays selected time on button", async () => {
+    const taskWithTime = {
+      id: "1",
+      title: "Test",
+      description: "Test",
+      status: Status.PENDING,
+      priority: Priority.High,
+      dueDate: "2025-12-31T14:30:00.000Z"
+    };
+    
+    const mockOnSubmit = vi.fn();
+    const mockOnClose = vi.fn();
+    
+    render(<TaskForm onSubmit={mockOnSubmit} onClose={mockOnClose} initialTask={taskWithTime} />);
+    
+    expect(screen.getByText("14:30")).toBeInTheDocument();
+  });
+
+
   it("handles API error gracefully", async () => {
     vi.mocked(getTasks).mockRejectedValue(new Error("API Error"));
     
@@ -230,7 +372,6 @@ describe("Dashboard", () => {
     await waitFor(() => {
       expect(screen.queryByText("Loading Tasks...")).not.toBeInTheDocument();
     });
-    //consoleSpy.mockRestore();
   });
 
   it("closes task form when Cancel is clicked", async () => {

@@ -37,8 +37,7 @@ export default function Dashboard(){
             if(sortKey === SortKey.Title) return a.title.localeCompare(b.title);
             if(sortKey === SortKey.Priority) return priorityOrder.indexOf(b.priority) - priorityOrder.indexOf(a.priority)
             if(sortKey === SortKey.DueDate) return new Date(a.dueDate || 0).getTime() - new Date(b.dueDate || 0).getTime();
-            console.warn(`Sort key: ${sortKey} was not processed properly`);
-            return 0;
+            return 0; // Default case, no sorting
         });
     }
 

@@ -75,6 +75,7 @@ export default function TaskForm({onSubmit,onClose,initialTask}: TaskFormProps){
                         required
                         value={title}
                         onChange={(e) => setTitle(e.target.value)}
+                        placeholder="Task Title"
                     />
                 </label>
                 {/**Description */}
@@ -85,6 +86,7 @@ export default function TaskForm({onSubmit,onClose,initialTask}: TaskFormProps){
                         rows={3}
                         value={description}
                         onChange={(e) => setDescription(e.target.value)}
+                        placeholder="Task Description"
                     />
                 </label>
                 {/**Due Date and Time */}
