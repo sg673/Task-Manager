@@ -127,6 +127,10 @@
   - [ ] Add unit tests for components
   - [ ] Implement integration tests
   - [ ] Create test data fixtures
+  
+- [ ] Account
+  - [ ] Add account registration system
+  - [ ] add login system
 
 - [ ] Beautification
   - [ ] Add spinners to loading screens
