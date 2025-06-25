@@ -1,8 +1,9 @@
 import { Toaster } from 'react-hot-toast'
 import './App.css'
 import Dashboard from './pages/dashboard'
-import { BrowserRouter } from 'react-router-dom'
+import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import Navbar from './components/navbar'
+import Profile from './pages/profile'
 
 
 function App() {
@@ -13,7 +14,15 @@ function App() {
     <BrowserRouter>
       <Navbar/>
       <Toaster position='top-right' toastOptions={{duration:2000}}/>
-      <Dashboard/>
+      <Routes>
+        <Route path="/">
+          <Route path="dashboard" element={<Dashboard/>} />
+          <Route path="projects" element={<div>Project Page (WIP)</div>} />
+          <Route path="profile" element={<Profile/>}/>
+
+        </Route>
+
+      </Routes>
     </BrowserRouter>
     </>
   )

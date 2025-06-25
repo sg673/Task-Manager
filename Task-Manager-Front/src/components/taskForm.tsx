@@ -21,7 +21,7 @@ export default function TaskForm({onSubmit,onClose,initialTask}: TaskFormProps){
     // Generate time options in 30-minute intervals
     const timeOptions = [];
     for (let hour = 0; hour < 24; hour++) {
-        for (let minute of [0, 30]) {
+        for (const minute of [0, 30]) {
             const formattedHour = hour.toString().padStart(2, '0');
             const formattedMinute = minute.toString().padStart(2, '0');
             timeOptions.push(`${formattedHour}:${formattedMinute}`);
@@ -141,7 +141,7 @@ export default function TaskForm({onSubmit,onClose,initialTask}: TaskFormProps){
                             <button
                                 key={priorityValue}
                                 type="button"
-                                className={`px-3 py-1.5 text-sm rounder border transition ${
+                                className={`px-3 py-1.5 text-sm rounded-md border transition ${
                                     priority === priorityValue ?
                                     "bg-blue-600 text-white border-blue-600" :
                                     "bg-white text-gray-700 border-gray-300 hover:bg-gray-100"

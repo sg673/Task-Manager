@@ -113,7 +113,7 @@
   - [ ] Enable task status updates via drag and drop
 
 - [ ] Add user profile page
-  - [ ] Create profile settings interface
+  - [x] Create profile settings interface
   - [ ] Implement password change functionality
   - [ ] Add user preferences
 
