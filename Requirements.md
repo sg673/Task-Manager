@@ -128,6 +128,9 @@
   - [ ] Implement integration tests
   - [ ] Create test data fixtures
 
+- [ ] Beautification
+  - [ ] Add spinners to loading screens
+
 ## Known Issues
  - task form priorities do not display correctly when on small screens
  - On task form, None highlights gray when another priority is highlighted
