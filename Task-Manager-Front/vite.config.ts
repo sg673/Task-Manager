@@ -12,7 +12,12 @@ export default defineConfig({
       environment: 'jsdom',
       globals: true,
       setUpFiles: ['./src/__tests__/setup.ts'],
-      silent: true
+      silent: true,
+      coverage:{
+        provider: 'v8',
+        reporter: ['text', 'json', 'html'],
+        reportsDirectory: './coverage',
+      }
     }
   } as UserConfig
 )
