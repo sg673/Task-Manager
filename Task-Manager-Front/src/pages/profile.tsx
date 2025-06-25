@@ -31,12 +31,12 @@ export default function Profile(){
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
+        setIsEditing(false);
         if(!user) return;
 
         try {
             await updateUser({...formData} as User);
             setUser({ ...user, ...formData });
-            setIsEditing(false);
             toast.success("Profile updated successfully");
         }
         catch (error) {
@@ -50,20 +50,16 @@ export default function Profile(){
         const { name, value } = e.target;
         setFormData({ ...formData, [name]: value });
     }
-    if(isLoading){
-        return (
-            <div className="flex justify-center p-8">
-                Loading Profile...
-            </div>
-        )
-    }
     return(
-        <div className="max-w-4x1 mx-auto p-4">
+        <div className="max-w-4x1 mx-auto p-4 bg-gray-100">
             <h1 className="text-2x1 font-bold mb-6">User Profile</h1>
-            {!isEditing ? (
-                <div className="bg-white shadown rounded-lg p-6">
-                    <div className="flex flex-col md:flex-row gap-6">
-                        <div className="flex-shrink-0">
+            {isLoading ? (
+                <div className="flex justify-center p-8">Loading Profile...</div>
+            ) :
+            !isEditing ? (
+                <div className="bg-white shadow rounded-lg p-6">
+                    <div className="flex flex-col gap-6">
+                        <div className="flex-shrink-0 flex justify-center items-center">
                             <img
                                 src={user?.avatar || "https://via.placeholder.com/150"}
                                 alt="User Avatar"
