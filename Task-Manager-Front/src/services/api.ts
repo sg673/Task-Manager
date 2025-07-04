@@ -87,6 +87,12 @@ export async function updateUser(updatedUser: User): Promise<boolean> {
     });
 }
 
+export async function registerUser():Promise<boolean>{
+    return new Promise((resolve) =>{
+        setTimeout(() => resolve(true),800);
+    });
+}
+
 export async function validateCredentials(username: string, password: string): Promise<boolean> {
     return new Promise((resolve) => {
         if (username == mockUser.username && password == mockUser.password){
