@@ -1,7 +1,8 @@
 
-import {Link, useLocation} from "react-router-dom";
+import {Link, useLocation, useNavigate} from "react-router-dom";
 import { Menu,X } from "lucide-react";
 import { useState } from "react";
+import { useAuth } from "../hooks/useAuth";
 
 const navLinks = [
     {label: "Dashboard", path:"/dashboard"},
@@ -12,9 +13,17 @@ const navLinks = [
 export default function Navbar(){
     const location = useLocation();
     const [menuOpen,setMenuOpen] = useState(false);
+    const {logout} = useAuth();
+    const navigate = useNavigate();
 
     function toggleMenu(){
         setMenuOpen((prev) => !prev);
+    }
+
+    function handleLogout(){
+        logout();
+        navigate("/login");
+        
     }
 
     return (
@@ -41,6 +50,7 @@ export default function Navbar(){
                     ))}
 
                     <button
+                    onClick={handleLogout}
                      className="ml-4 text-sm bg-gray-100 hover:bg-gray-200 px-3 py-1.5 rounded"
                      >Logout</button>
                 </div>
@@ -64,8 +74,13 @@ export default function Navbar(){
                                 >{link.label}</Link>
                             ))}
                             <button
+                                
                                 className="block text-left text-sm w-full bg-gray-100 hover:bg-gray-200 px-3 py-1.5 rounded"
-                                onClick={() => setMenuOpen(false)}
+                                onClick={() => {
+                                    setMenuOpen(false)
+                                    handleLogout();
+                                }
+                            }
                             >Logout</button>
                         </div>
                     )}
