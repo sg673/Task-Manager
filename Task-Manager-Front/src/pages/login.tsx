@@ -1,11 +1,24 @@
 import { useState } from "react";
+import { useAuth } from "../hooks/useAuth";
+import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 
 export default function Login(){
     const [username,setUsername] = useState("");
     const [password,setPassword] = useState("");
+    const {login} = useAuth();
+    const navigate = useNavigate();
 
-    function handleSubmit(){
-
+    async function handleSubmit(e:React.FormEvent){
+        e.preventDefault();
+        const success = await login(username,password);
+        if(success){
+            toast.success("Login Successful");
+            navigate("/dashboard");
+        }
+        else{
+            toast.error("Invalid Credentials");
+        }
     }
 
     return (
