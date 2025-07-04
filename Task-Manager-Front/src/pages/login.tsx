@@ -46,7 +46,7 @@ export default function Login(){
                         type="password"
                         id="password"
                         value={password}
-                        onChange={(e) => e.target.value}
+                        onChange={(e) => setPassword(e.target.value)}
                         required
                         className="w-full px-3 py-2 border rounded-md bg-gray-50"
                     />
