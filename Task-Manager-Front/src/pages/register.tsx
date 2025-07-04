@@ -1,5 +1,7 @@
-export default function Register() {
+import { useNavigate } from "react-router-dom";
 
+export default function Register() {
+    const navigate = useNavigate();
     return(
         <div className="max-w-xl mx-auto p-4 bg-gray-100">
             <h1>Register</h1>
@@ -30,12 +32,18 @@ export default function Register() {
                     <input type="password" id="confirmPassword" name="confirmPassword" required className="w-full px-3 py-2 border rounded-md bg-gray-50"/>
                 </div>
                 <div className="flex gap-2 justify-end">
-                    <button type="submit" className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 hover:scale-110 transition">Register</button>
+                    <button 
+                        type="submit"
+                         className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 hover:scale-110 transition"
+                    >
+                        Register
+                    </button>
                     <button
-                            type="button"
+                            type="button" 
+                            onClick={() => navigate("/login")}
                             className=" bg-gray-200 px-4 py-2 rounded hover:bg-gray-300 hover:scale-110 transition"
                         >
-                            Cancel
+                            Login
                         </button>
                 </div>
             </div>

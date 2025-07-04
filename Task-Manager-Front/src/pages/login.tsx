@@ -57,6 +57,13 @@ export default function Login(){
                 >
                     Login
                 </button>
+                <button
+                    type="button"
+                    onClick={() => navigate("/register")}
+                    className="w-full mt-2 bg-gray-200 text-gray-700 px-4 py-2 rounded hover:bg-gray-300 hover:scale-110 transition"
+                >
+                    Sign Up
+                </button>
             </form>
         </div>
 
