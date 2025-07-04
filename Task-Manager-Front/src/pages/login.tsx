@@ -6,14 +6,18 @@ import toast from "react-hot-toast";
 export default function Login(){
     const [username,setUsername] = useState("");
     const [password,setPassword] = useState("");
+    const [isLoading,setIsLoading] = useState(false);
     const {login} = useAuth();
     const navigate = useNavigate();
 
+
     async function handleSubmit(e:React.FormEvent){
         e.preventDefault();
+        setIsLoading(true);
         const success = await login(username,password);
+        setIsLoading(false);
         if(success){
-            toast.success("Login Successful");
+            toast.success("Welcome Back!");
             navigate("/dashboard");
         }
         else{
@@ -53,9 +57,10 @@ export default function Login(){
                 </div>
                 <button
                     type="submit"
+                    disabled={isLoading}
                     className="w-full bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 hover:scale-110 transition"    
                 >
-                    Login
+                    {isLoading ? "Logging in..." : "Login"}
                 </button>
                 <button
                     type="button"
