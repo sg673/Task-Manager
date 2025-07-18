@@ -91,7 +91,7 @@ export default function Profile(){
                                 name="firstName"
                                 value={formData.firstName || user?.firstName || ""}
                                 onChange={handleChange}
-                                className="w-full px-3 py-2 border rounded=md"
+                                className="w-full px-3 py-2 border rounded-md"
                             />
                         </div>
                         <div>
@@ -101,7 +101,7 @@ export default function Profile(){
                                 name="lastName"
                                 value={formData.lastName || user?.lastName || ""}
                                 onChange={handleChange}
-                                className="w-full px-3 py-2 border rounded=md"
+                                className="w-full px-3 py-2 border rounded-md"
                             />
                         </div>
                         <div>
@@ -111,7 +111,7 @@ export default function Profile(){
                                 name="username"
                                 value={formData.username || user?.username || ""}
                                 onChange={handleChange}
-                                className="w-full px-3 py-2 border rounded=md"
+                                className="w-full px-3 py-2 border rounded-md"
                             />
                         </div>
                         <div>
@@ -121,7 +121,7 @@ export default function Profile(){
                                 name="email"
                                 value={formData.email || user?.email || ""}
                                 onChange={handleChange}
-                                className="w-full px-3 py-2 border rounded=md"
+                                className="w-full px-3 py-2 border rounded-md"
                             />
                         </div>
                         <div>
@@ -131,7 +131,7 @@ export default function Profile(){
                                 name="avatar"
                                 value={formData.avatar || user?.avatar || ""}
                                 onChange={handleChange}
-                                className="w-full px-3 py-2 border rounded=md"
+                                className="w-full px-3 py-2 border rounded-md"
                             />
                         </div>
                         <div className="md:col-span-2">
@@ -140,7 +140,7 @@ export default function Profile(){
                                 name="bio"
                                 value={formData.bio || user?.bio || ""}
                                 onChange={handleChange}
-                                className="w-full px-3 py-2 border rounded=md"
+                                className="w-full px-3 py-2 border rounded-md"
                                 rows={3}
                             />
                         </div>

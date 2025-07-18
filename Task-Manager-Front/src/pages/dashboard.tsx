@@ -6,6 +6,11 @@ import TaskForm from "../components/taskForm";
 import { toast } from "react-hot-toast";
 import { MAX_DESC_LENGTH, MAX_TITLE_LENGTH } from "../types/constants";
 
+/**
+ * Dashboard page component that displays and manages tasks
+ * 
+ * @returns {JSX.Element} The rendered dashboard page
+ */
 export default function Dashboard(){
     const [tasks,setTasks] = useState<Task[]>([]);
     const [loading,setLoading] = useState(true);
@@ -31,6 +36,11 @@ export default function Dashboard(){
         fetchTasks();
     },[tasks]);
 
+    /**
+     * Returns a sorted copy of the tasks array based on the current sort key
+     * 
+     * @returns {Task[]} Sorted array of tasks
+     */
     function sortedTasks(): Task[]{
         const priorityOrder = Object.values(Priority);
         return [...tasks].sort((a,b) => {
@@ -41,6 +51,12 @@ export default function Dashboard(){
         });
     }
 
+    /**
+     * Calculates and formats the time remaining until a due date
+     * 
+     * @param {string} [dueDate] - The due date in ISO format
+     * @returns {string} Formatted time remaining string
+     */
     function getTimeLeft(dueDate?: string) : string {
         if(!dueDate) return "No Due Date";
         const diff = new Date(dueDate).getTime() - Date.now();
@@ -48,9 +64,14 @@ export default function Dashboard(){
         const hours = Math.floor(diff / (1000 * 60 * 60));
         const days = Math.floor(hours / 24);
         return days > 0 ? `${days}d left` : `${hours}h left`;
-
     }
 
+    /**
+     * Truncates description text if it exceeds maximum length
+     * 
+     * @param {string} desc - The description text
+     * @returns {string} Truncated description with ellipsis if needed
+     */
     function formatDesc(desc : string) : string{
         if(desc){
             return (desc.length > MAX_DESC_LENGTH) ? desc.slice(0,MAX_DESC_LENGTH) + "..." : desc;
@@ -58,6 +79,12 @@ export default function Dashboard(){
         return "";
     }
 
+    /**
+     * Truncates title text if it exceeds maximum length
+     * 
+     * @param {string} title - The title text
+     * @returns {string} Truncated title with ellipsis if needed
+     */
     function formatTitle(title : string) : string{
         if(title){
             return (title.length > MAX_TITLE_LENGTH) ? title.slice(0,MAX_TITLE_LENGTH) + "..." : title;
@@ -65,6 +92,12 @@ export default function Dashboard(){
         return "";
     }
 
+    /**
+     * Handles task creation by generating an ID and calling the API
+     * 
+     * @param {Omit<Task,"id">} task - The task data without ID
+     * @returns {Promise<void>} Promise that resolves when task is created
+     */
     async function handleCreateTask(task:Omit<Task,"id">) {
         const newTask : Task = {
             ...task,
@@ -74,6 +107,12 @@ export default function Dashboard(){
         //setTasks([...prev,newTask])
     }
 
+    /**
+     * Handles task deletion by removing it from state and calling the API
+     * 
+     * @param {string} id - The ID of the task to delete
+     * @returns {Promise<void>} Promise that resolves when task is deleted
+     */
     async function handleDeleteTask(id : string){
         setTasks(tasks.filter((t) => t.id !== id))
         // eslint-disable-next-line @typescript-eslint/no-unused-expressions
@@ -88,6 +127,12 @@ export default function Dashboard(){
         }*/
     }
     
+    /**
+     * Handles task updates by calling the API and clearing edit mode
+     * 
+     * @param {Task} task - The updated task data
+     * @returns {Promise<void>} Promise that resolves when task is updated
+     */
     async function handleUpdateTask(task:Task){
         // eslint-disable-next-line @typescript-eslint/no-unused-expressions
         await updateTask(task) ? toast.success("Task updated successfully") : toast.error("Failed to update task");
