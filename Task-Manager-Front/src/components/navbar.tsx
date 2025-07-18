@@ -9,10 +9,18 @@ const navLinks = [
     {label: "Profile", path:"/profile"}
 ];
 
+/**
+ * Navigation component that provides links to different sections of the application
+ * 
+ * @returns {JSX.Element} The rendered navigation bar
+ */
 export default function Navbar(){
     const location = useLocation();
     const [menuOpen,setMenuOpen] = useState(false);
 
+    /**
+     * Toggles the mobile menu open/closed state
+     */
     function toggleMenu(){
         setMenuOpen((prev) => !prev);
     }

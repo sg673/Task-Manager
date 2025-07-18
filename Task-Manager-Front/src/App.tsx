@@ -6,9 +6,12 @@ import Navbar from './components/navbar'
 import Profile from './pages/profile'
 
 
+/**
+ * Main application component that sets up routing and global components
+ * 
+ * @returns {JSX.Element} The rendered application
+ */
 function App() {
-  
-
   return (
     <>
     <BrowserRouter>

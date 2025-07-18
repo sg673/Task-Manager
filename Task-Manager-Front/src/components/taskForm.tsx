@@ -9,6 +9,15 @@ interface TaskFormProps{
     initialTask? : Task;
 }
 
+/**
+ * Form component for creating and editing tasks
+ * 
+ * @param {TaskFormProps} props - Component props
+ * @param {Function} props.onSubmit - Function to call when form is submitted
+ * @param {Function} props.onClose - Function to call when form is closed
+ * @param {Task} [props.initialTask] - Initial task data for editing mode
+ * @returns {JSX.Element} The rendered form
+ */
 export default function TaskForm({onSubmit,onClose,initialTask}: TaskFormProps){
     const [title, setTitle] = useState(initialTask?.title ?? "");
     const [description, setDescription] = useState(initialTask?.description ?? "");
@@ -42,6 +51,11 @@ export default function TaskForm({onSubmit,onClose,initialTask}: TaskFormProps){
         return () => document.removeEventListener("mousedown", handleClickOutside);
     }, []);
 
+    /**
+     * Handles form submission, formats the date/time, and calls the onSubmit callback
+     * 
+     * @param {React.FormEvent} e - The form submission event
+     */
     function handleSubmit(e:React.FormEvent){
         e.preventDefault();
         let dueDateTimeISO;

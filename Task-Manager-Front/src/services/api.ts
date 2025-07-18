@@ -38,12 +38,23 @@ const mockUser: User = {
 //800ms delay added to all returns to simulate network delay
 
 
+/**
+ * Retrieves all tasks from the API
+ * 
+ * @returns {Promise<Task[]>} Promise that resolves with an array of tasks
+ */
 export async function getTasks(): Promise<Task[]> {
     return new Promise((resolve) =>{
         setTimeout(() => resolve(mockTasks),800);
     })
 }
 
+/**
+ * Adds a new task to the system
+ * 
+ * @param {Task} newTask - The task to add
+ * @returns {Promise<boolean>} Promise that resolves with success status
+ */
 export async function addTask(newTask: Task) : Promise<boolean> {
     return new Promise((resolve) => {
         mockTasks.push(newTask);
@@ -51,6 +62,12 @@ export async function addTask(newTask: Task) : Promise<boolean> {
     })
 }
 
+/**
+ * Updates an existing task
+ * 
+ * @param {Task} updatedTask - The task with updated data
+ * @returns {Promise<boolean>} Promise that resolves with success status
+ */
 export async function updateTask(updatedTask: Task): Promise<boolean> {
     return new Promise((resolve) => {
         const index = mockTasks.findIndex((task) => task.id === updatedTask.id);
@@ -62,6 +79,12 @@ export async function updateTask(updatedTask: Task): Promise<boolean> {
     })
 }
 
+/**
+ * Deletes a task by ID
+ * 
+ * @param {string} taskId - The ID of the task to delete
+ * @returns {Promise<boolean>} Promise that resolves with success status
+ */
 export async function deleteTask(taskId: string): Promise<boolean> {
     return new Promise((resolve) => {
         const index = mockTasks.findIndex((task) => task.id === taskId);
@@ -74,11 +97,22 @@ export async function deleteTask(taskId: string): Promise<boolean> {
 }
 
 //User calls
+/**
+ * Retrieves the current user's information
+ * 
+ * @returns {Promise<User>} Promise that resolves with user data
+ */
 export async function getUser(): Promise<User> {
     return new Promise((resolve) => {
         setTimeout(() => resolve(mockUser), 800);
     });
 }
+/**
+ * Updates the current user's information
+ * 
+ * @param {User} updatedUser - The user data with updates
+ * @returns {Promise<boolean>} Promise that resolves with success status
+ */
 export async function updateUser(updatedUser: User): Promise<boolean> {
     return new Promise((resolve) => {
        Object.assign(mockUser, updatedUser);
