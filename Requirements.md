@@ -84,12 +84,12 @@
   - [ ] Implement status toggling (ToDo/Complete) in TaskCard
   - [ ] Add task completion functionality
 
-- [ ] Implement authentication system
-  - [ ] Complete login.tsx page
-  - [ ] Complete register.tsx page
-  - [ ] Implement useAuth.ts hook functionality
-  - [ ] Connect logout button in navbar.tsx
-  - [ ] Set up protectedRoute.tsx component
+- [x] Implement authentication system
+  - [x] Complete login.tsx page
+  - [x] Complete register.tsx page
+  - [x] Implement useAuth.ts hook functionality
+  - [x] Connect logout button in navbar.tsx
+  - [x] Set up protectedRoute.tsx component
 
 - [ ] Develop project organization features
   - [ ] Complete project.tsx page
@@ -126,10 +126,6 @@
 - [x] Setup testing
   - [x] Add unit tests for components
   - [x] Create test data fixtures
-  
-- [ ] Account
-  - [ ] Add account registration system
-  - [ ] add login system
 
 - [ ] Beautification
   - [ ] Add spinners to loading screens
