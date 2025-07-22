@@ -18,7 +18,7 @@ export default function Dashboard(){
     const [editingTask,setEditingTask] = useState<Task | null>(null);
     const [sortKey,setSortKey] = useState<SortKey>(SortKey.DueDate);
 
-    
+
     //Loading tasks from memory
     useEffect(() =>{
         async function fetchTasks(){
@@ -45,9 +45,8 @@ export default function Dashboard(){
         const priorityOrder = Object.values(Priority);
         return [...tasks].sort((a,b) => {
             if(sortKey === SortKey.Title) return a.title.localeCompare(b.title);
-            if(sortKey === SortKey.Priority) return priorityOrder.indexOf(b.priority) - priorityOrder.indexOf(a.priority)
-            if(sortKey === SortKey.DueDate) return new Date(a.dueDate || 0).getTime() - new Date(b.dueDate || 0).getTime();
-            return 0; // Default case, no sorting
+            if(sortKey === SortKey.Priority) return priorityOrder.indexOf(b.priority) - priorityOrder.indexOf(a.priority);
+            else return new Date(a.dueDate || 0).getTime() - new Date(b.dueDate || 0).getTime();
         });
     }
 
