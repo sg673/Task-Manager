@@ -117,7 +117,7 @@ describe('Register Component', () => {
     fireEvent.click(screen.getByRole('button', { name: /register/i }));
     
     await waitFor(() => {
-      expect(toast.error).toHaveBeenCalledWith('Passwords dont match');
+      expect(toast.error).toHaveBeenCalledWith("Passwords don't match");
       expect(registerUser).not.toHaveBeenCalled();
     });
   });
