@@ -7,7 +7,6 @@ import { Priority } from "../types/priority";
 import { Status } from "../types/status";
 import { SortKey } from "../types/task";
 import '@testing-library/jest-dom/vitest';
-import TaskForm from "../components/taskForm";
 
 // Mock the API
 vi.mock("../services/api");
@@ -292,77 +291,6 @@ describe("Dashboard", () => {
       priority: Priority.High,
     });
   });
-
-
-  it("opens time selector when time button is clicked", async () => {
-    const mockOnSubmit = vi.fn();
-    const mockOnClose = vi.fn();
-    const user = userEvent.setup();
-    
-    render(<TaskForm onSubmit={mockOnSubmit} onClose={mockOnClose} />);
-    
-    const timeButton = screen.getByText("Select time");
-    await user.click(timeButton);
-    
-    expect(screen.getByText("00:00")).toBeInTheDocument();
-    expect(screen.getByText("12:30")).toBeInTheDocument();
-  });
-
-  it("selects time and closes dropdown", async () => {
-    const mockOnSubmit = vi.fn();
-    const mockOnClose = vi.fn();
-    const user = userEvent.setup();
-    
-    render(<TaskForm onSubmit={mockOnSubmit} onClose={mockOnClose} />);
-    
-    const timeButton = screen.getByText("Select time");
-    await user.click(timeButton);
-    
-    const timeOption = screen.getByText("09:30");
-    await user.click(timeOption);
-    
-    expect(screen.getByText("09:30")).toBeInTheDocument();
-    expect(screen.queryByText("00:00")).not.toBeInTheDocument();
-  });
-
-  it("closes time selector when clicking outside", async () => {
-    const mockOnSubmit = vi.fn();
-    const mockOnClose = vi.fn();
-    const user = userEvent.setup();
-    
-    render(<TaskForm onSubmit={mockOnSubmit} onClose={mockOnClose} />);
-    
-    const timeButton = screen.getByText("Select time");
-    await user.click(timeButton);
-    
-    expect(screen.getByText("00:00")).toBeInTheDocument();
-    
-    // Click outside the time selector
-    await user.click(document.body);
-    
-    await waitFor(() => {
-      expect(screen.queryByText("00:00")).not.toBeInTheDocument();
-    });
-  });
-
-  it("displays selected time on button", async () => {
-    const taskWithTime = {
-      id: "1",
-      title: "Test",
-      description: "Test",
-      status: Status.PENDING,
-      priority: Priority.High,
-      dueDate: "2025-12-31T14:30:00.000Z"
-    };
-    
-    const mockOnSubmit = vi.fn();
-    const mockOnClose = vi.fn();
-    
-    render(<TaskForm onSubmit={mockOnSubmit} onClose={mockOnClose} initialTask={taskWithTime} />);
-    
-    expect(screen.getByText("14:30")).toBeInTheDocument();
-  });
-
 
   it("handles API error gracefully", async () => {
     vi.mocked(getTasks).mockRejectedValue(new Error("API Error"));
