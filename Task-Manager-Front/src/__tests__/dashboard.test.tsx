@@ -97,25 +97,20 @@ describe("Dashboard", () => {
 
   it("renders sort dropdown with correct options",async () => {
     render(<Dashboard />);
+
     const sortSelect = screen.getByDisplayValue("Sort by: Due Date");
     expect(sortSelect).toBeInTheDocument();
     await act(async () => {
       fireEvent.click(sortSelect);
-
     });
-
-    //await act(async () => {
-    //  await user.click(cancelButton);
-    //});
     expect(screen.getByText("Sort by: Priority")).toBeInTheDocument();
     expect(screen.getByText("Sort by: Title")).toBeInTheDocument();
   });
 
   it("opens task form when New Task button is clicked", async () => {
     render(<Dashboard />);
-    
-    const newTaskButton = screen.getByText("+ New Task");
 
+    const newTaskButton = screen.getByText("+ New Task");
       await user.click(newTaskButton);
     expect(screen.getByText("New Task")).toBeInTheDocument();
   });
@@ -148,10 +143,8 @@ describe("Dashboard", () => {
     await waitFor(() => {
       expect(screen.getAllByText("Edit")).toHaveLength(2);
     });
-    
     const editButtons = screen.getAllByText("Edit");
     await user.click(editButtons[0]);
-    
     expect(screen.getByText("Edit Task")).toBeInTheDocument();
   });
 
@@ -161,11 +154,8 @@ describe("Dashboard", () => {
     await waitFor(() => {
       expect(screen.getAllByText("Delete")).toHaveLength(2);
     });
-    
     const deleteButtons = screen.getAllByText("Delete");
-  
     await user.click(deleteButtons[0]);
-    
     expect(deleteTask).toHaveBeenCalledWith("1");
   });
 
@@ -175,12 +165,10 @@ describe("Dashboard", () => {
     await waitFor(() => {
       expect(screen.getByText("Test Task 1")).toBeInTheDocument();
     });
-    
     const sortSelect = screen.getByDisplayValue("Sort by: Due Date");
     await act(async () => {
       await user.selectOptions(sortSelect, SortKey.Title);
     });
-    
     expect(sortSelect).toHaveValue(SortKey.Title);
   });
 
@@ -190,12 +178,10 @@ describe("Dashboard", () => {
     await waitFor(() => {
       expect(screen.getByText("Test Task 1")).toBeInTheDocument();
     });
-    
     const sortSelect = screen.getByDisplayValue("Sort by: Due Date");
     await act(async () => {
       await user.selectOptions(sortSelect, SortKey.Priority);
     });
-    
     expect(sortSelect).toHaveValue(SortKey.Priority);
   });
 
@@ -207,7 +193,6 @@ describe("Dashboard", () => {
     vi.mocked(getTasks).mockResolvedValue([longDescriptionTask]);
     
     render(<Dashboard />);
-    
     await waitFor(() => {
       expect(screen.getByText(/This is a very long description/)).toBeInTheDocument();
     });

@@ -11,8 +11,6 @@ export interface Task{
     projectId?: string;
 }
 
-
-
 export enum SortKey {
     Priority = "priority",
     DueDate = "dueDate",
