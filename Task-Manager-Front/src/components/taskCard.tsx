@@ -33,9 +33,9 @@ export default function TaskCard({ task, onEdit, onDelete }: TaskCardProps) {
   /**
    * Truncates a string and adds ... to the end if its more than the max length
    * 
-   * @param {string} - The string to be formatted
-   * @param {maxLength} - The maximum length of the string 
-   * @returns {string} - The string, truncated if necessary
+   * @param {string} string string to be formatted
+   * @param {number} maxLength maximum length of the string 
+   * @returns {string} The string, truncated if necessary
    */
   function formatString(string:string, maxLength:number):string{
     return (string.length > maxLength) ? string.slice(0,maxLength) + "..." : string;
