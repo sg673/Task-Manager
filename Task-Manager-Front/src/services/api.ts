@@ -2,6 +2,7 @@ import { Task } from "../types/task";
 import { Priority } from "../types/priority";
 import { Status } from "../types/status";
 import { User } from "../types/user";
+import { Project } from "../types/project";
 
 //MOCK API TO SIMULATE DATA
 const mockTasks: Task[] = [
@@ -35,8 +36,37 @@ const mockUser: User = {
   createdAt: "2023-01-15T00:00:00.000Z"
 };
 
+// Mock projects data
+const mockProjects: Project[] = [
+  {
+    id: "1",
+    name: "Personal Tasks",
+    description: "Day-to-day personal tasks and errands",
+    color: "#4f46e5", // indigo
+    createdAt: "2023-06-15T00:00:00.000Z"
+  },
+  {
+    id: "2",
+    name: "Work Projects",
+    description: "Professional tasks and deadlines",
+    color: "#0ea5e9", // sky blue
+    createdAt: "2023-06-20T00:00:00.000Z"
+  },
+  {
+    id: "3",
+    name: "Home Renovation",
+    description: "Tasks related to home improvement",
+    color: "#10b981", // emerald
+    createdAt: "2023-07-05T00:00:00.000Z"
+  }
+];
+
 //MOCK API CALLS
 //800ms delay added to all returns to simulate network delay
+
+// Update mock tasks with project IDs
+mockTasks[0].projectId = "1"; // Personal Tasks
+mockTasks[1].projectId = "2"; // Work Projects
 
 /**
  * Retrieves all tasks from the API
@@ -135,4 +165,98 @@ export async function validateCredentials(username: string, password: string): P
             setTimeout(() => resolve(false), 800);
         }
     })
+}
+
+/**
+ * Retrieves all projects
+ * 
+ * @returns {Promise<Project[]>} Promise that resolves with an array of projects
+ */
+export async function getProjects(): Promise<Project[]> {
+    return new Promise((resolve) => {
+        setTimeout(() => resolve(mockProjects), 800);
+    });
+}
+
+/**
+ * Retrieves a project by its ID
+ * 
+ * @param {string} projectId - The ID of the project to retrieve
+ * @returns {Promise<Project | null>} Promise that resolves with the project or null if not found
+ */
+export async function getProjectById(projectId: string): Promise<Project | null> {
+    return new Promise((resolve) => {
+        const project = mockProjects.find(p => p.id === projectId);
+        setTimeout(() => resolve(project || null), 800);
+    });
+}
+
+/**
+ * Creates a new project
+ * 
+ * @param {Project} project - The project to create
+ * @returns {Promise<Project>} Promise that resolves with the created project
+ */
+export async function createProject(project: Project): Promise<Project> {
+    return new Promise((resolve) => {
+        const newProject = {
+            ...project,
+            id: Date.now().toString(),
+            createdAt: new Date().toISOString()
+        };
+        mockProjects.push(newProject);
+        setTimeout(() => resolve(newProject), 800);
+    });
+}
+
+/**
+ * Updates an existing project
+ * 
+ * @param {Project} updatedProject - The project with updated data
+ * @returns {Promise<boolean>} Promise that resolves with success status
+ */
+export async function updateProject(updatedProject: Project): Promise<boolean> {
+    return new Promise((resolve) => {
+        const index = mockProjects.findIndex(p => p.id === updatedProject.id);
+        if (index !== -1) {
+            mockProjects[index] = {
+                ...updatedProject,
+                updatedAt: new Date().toISOString()
+            };
+            setTimeout(() => resolve(true), 800);
+        } else {
+            setTimeout(() => resolve(false), 800);
+        }
+    });
+}
+
+/**
+ * Deletes a project by ID
+ * 
+ * @param {string} projectId - The ID of the project to delete
+ * @returns {Promise<boolean>} Promise that resolves with success status
+ */
+export async function deleteProject(projectId: string): Promise<boolean> {
+    return new Promise((resolve) => {
+        const index = mockProjects.findIndex(p => p.id === projectId);
+        if (index !== -1) {
+            mockProjects.splice(index, 1);
+            setTimeout(() => resolve(true), 800);
+        } else {
+            setTimeout(() => resolve(false), 800);
+        }
+    });
+}
+
+/**
+ * Retrieves tasks associated with a specific project
+ * 
+ * @param {string} projectId - The ID of the project
+ * @returns {Promise<Task[]>} Promise that resolves with an array of tasks
+ */
+export async function getTasksByProject(projectId: string): Promise<Task[]> {
+    return new Promise((resolve) => {
+        const filteredTasks = mockTasks.filter(task => task.projectId === projectId);
+        setTimeout(() => resolve(filteredTasks), 800);
+    });
 }
