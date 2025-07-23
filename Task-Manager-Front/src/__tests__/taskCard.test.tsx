@@ -4,6 +4,7 @@ import TaskCard from '../components/taskCard';
 import { Priority } from '../types/priority';
 import { Status } from '../types/status';
 import '@testing-library/jest-dom/vitest';
+import { BrowserRouter } from 'react-router-dom';
 
 describe('TaskCard Component', () => {
   const mockTask = {
@@ -20,11 +21,13 @@ describe('TaskCard Component', () => {
 
   it('renders task information correctly', () => {
     render(
-      <TaskCard 
-        task={mockTask} 
-        onEdit={mockOnEdit} 
-        onDelete={mockOnDelete} 
-      />
+      <BrowserRouter>
+        <TaskCard 
+          task={mockTask} 
+          onEdit={mockOnEdit} 
+          onDelete={mockOnDelete} 
+          />
+      </BrowserRouter>
     );
 
     expect(screen.getByText('Test Task')).toBeInTheDocument();
@@ -36,11 +39,13 @@ describe('TaskCard Component', () => {
 
   it('handles user interactions correctly', () => {
     render(
-      <TaskCard 
-        task={mockTask} 
-        onEdit={mockOnEdit} 
-        onDelete={mockOnDelete} 
-      />
+      <BrowserRouter>
+        <TaskCard 
+          task={mockTask} 
+          onEdit={mockOnEdit} 
+          onDelete={mockOnDelete} 
+          />
+      </BrowserRouter>
     );
 
     fireEvent.click(screen.getByText('Edit'));
@@ -58,11 +63,13 @@ describe('TaskCard Component', () => {
     };
 
     render(
-      <TaskCard 
-        task={longTask} 
-        onEdit={mockOnEdit} 
-        onDelete={mockOnDelete} 
-      />
+      <BrowserRouter>
+        <TaskCard 
+          task={longTask} 
+          onEdit={mockOnEdit} 
+          onDelete={mockOnDelete} 
+          />
+      </BrowserRouter>
     );
 
     expect(screen.getByText(/This is a very long task title/)).toBeInTheDocument();

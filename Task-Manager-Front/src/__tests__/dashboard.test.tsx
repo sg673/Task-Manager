@@ -7,6 +7,7 @@ import { Priority } from "../types/priority";
 import { Status } from "../types/status";
 import { SortKey } from "../types/task";
 import '@testing-library/jest-dom/vitest';
+import { BrowserRouter } from "react-router-dom";
 
 // Mock the API
 vi.mock("../services/api");
@@ -51,7 +52,7 @@ describe("Dashboard", () => {
   });
 
   it("renders dashboard header", async () => {
-    render(<Dashboard />);
+    render(<BrowserRouter><Dashboard /></BrowserRouter>);
     await waitFor(() => {
       expect(screen.getByText("Dashboard")).toBeInTheDocument();
       expect(screen.getByText("Manage your tasks efficiently")).toBeInTheDocument();
@@ -59,7 +60,7 @@ describe("Dashboard", () => {
   });
 
   it("shows loading state initially", async () => {
-    render(<Dashboard />);
+    render(<BrowserRouter><Dashboard /></BrowserRouter>);
     const loadingText = screen.getByText("Loading Tasks...");
     await waitFor(() => {
       expect(loadingText).toBeInTheDocument();
@@ -67,7 +68,7 @@ describe("Dashboard", () => {
   });
 
   it("loads and displays tasks", async () => {
-    render(<Dashboard />);
+    render(<BrowserRouter><Dashboard /></BrowserRouter>);
     
     await waitFor(() => {
       expect(screen.getByText("Test Task 1")).toBeInTheDocument();
@@ -79,7 +80,7 @@ describe("Dashboard", () => {
 
   it("displays no tasks message when empty", async () => {
     vi.mocked(getTasks).mockResolvedValue([]);
-    render(<Dashboard />);
+    render(<BrowserRouter><Dashboard /></BrowserRouter>);
     
     await waitFor(() => {
       expect(screen.getByText("No Tasks Found. Create One!")).toBeInTheDocument();
@@ -87,7 +88,7 @@ describe("Dashboard", () => {
   });
 
   it("renders New Task button", async () => {
-    render(<Dashboard />);
+    render(<BrowserRouter><Dashboard /></BrowserRouter>);
     const newTaskButton = screen.getByText("+ New Task");
 
     await waitFor(() => {
@@ -96,7 +97,7 @@ describe("Dashboard", () => {
   });
 
   it("renders sort dropdown with correct options",async () => {
-    render(<Dashboard />);
+    render(<BrowserRouter><Dashboard /></BrowserRouter>);
 
     const sortSelect = screen.getByDisplayValue("Sort by: Due Date");
     expect(sortSelect).toBeInTheDocument();
@@ -108,7 +109,7 @@ describe("Dashboard", () => {
   });
 
   it("opens task form when New Task button is clicked", async () => {
-    render(<Dashboard />);
+    render(<BrowserRouter><Dashboard /></BrowserRouter>);
 
     const newTaskButton = screen.getByText("+ New Task");
       await user.click(newTaskButton);
@@ -116,7 +117,7 @@ describe("Dashboard", () => {
   });
 
   it("displays task information correctly", async () => {
-    render(<Dashboard />);
+    render(<BrowserRouter><Dashboard /></BrowserRouter>);
     
     await waitFor(() => {
       expect(screen.getByText("Test Task 1")).toBeInTheDocument();
@@ -127,7 +128,7 @@ describe("Dashboard", () => {
   });
 
   it("shows Edit and Delete buttons for each task", async () => {
-    render(<Dashboard />);
+    render(<BrowserRouter><Dashboard /></BrowserRouter>);
     
     await waitFor(() => {
       const editButtons = screen.getAllByText("Edit");
@@ -138,7 +139,7 @@ describe("Dashboard", () => {
   });
 
   it("opens edit form when Edit button is clicked", async () => {
-    render(<Dashboard />);
+    render(<BrowserRouter><Dashboard /></BrowserRouter>);
     
     await waitFor(() => {
       expect(screen.getAllByText("Edit")).toHaveLength(2);
@@ -149,7 +150,7 @@ describe("Dashboard", () => {
   });
 
   it("deletes task when Delete button is clicked", async () => {
-    render(<Dashboard />);
+    render(<BrowserRouter><Dashboard /></BrowserRouter>);
     
     await waitFor(() => {
       expect(screen.getAllByText("Delete")).toHaveLength(2);
@@ -160,7 +161,7 @@ describe("Dashboard", () => {
   });
 
   it("sorts tasks by title", async () => {
-    render(<Dashboard />);
+    render(<BrowserRouter><Dashboard /></BrowserRouter>);
     
     await waitFor(() => {
       expect(screen.getByText("Test Task 1")).toBeInTheDocument();
@@ -173,7 +174,7 @@ describe("Dashboard", () => {
   });
 
   it("sorts tasks by priority", async () => {
-    render(<Dashboard />);
+    render(<BrowserRouter><Dashboard /></BrowserRouter>);
     
     await waitFor(() => {
       expect(screen.getByText("Test Task 1")).toBeInTheDocument();
@@ -192,7 +193,7 @@ describe("Dashboard", () => {
     };
     vi.mocked(getTasks).mockResolvedValue([longDescriptionTask]);
     
-    render(<Dashboard />);
+    render(<BrowserRouter><Dashboard /></BrowserRouter>);
     await waitFor(() => {
       expect(screen.getByText(/This is a very long description/)).toBeInTheDocument();
     });
@@ -205,7 +206,7 @@ describe("Dashboard", () => {
     };
     vi.mocked(getTasks).mockResolvedValue([longTitleTask]);
     
-    render(<Dashboard />);
+    render(<BrowserRouter><Dashboard /></BrowserRouter>);
     
     await waitFor(() => {
       expect(screen.getByText(/This is a very long title/)).toBeInTheDocument();
@@ -213,7 +214,7 @@ describe("Dashboard", () => {
   });
 
   it("displays time left for tasks with due dates", async () => {
-    render(<Dashboard />);
+    render(<BrowserRouter><Dashboard /></BrowserRouter>);
     
     await waitFor(() => {
       // Should show some time indication (days or hours left)
@@ -222,7 +223,7 @@ describe("Dashboard", () => {
   });
 
   it("creates a new task when form is submitted", async () => {
-    render(<Dashboard />);
+    render(<BrowserRouter><Dashboard /></BrowserRouter>);
     
     const newTaskButton = screen.getByText("+ New Task");
     await user.click(newTaskButton);
@@ -247,7 +248,7 @@ describe("Dashboard", () => {
   });
 
   it("updates a task when edit form is submitted", async () => {
-    render(<Dashboard />);
+    render(<BrowserRouter><Dashboard /></BrowserRouter>);
     
     await waitFor(() => {
       expect(screen.getAllByText("Edit")).toHaveLength(2);
@@ -280,7 +281,7 @@ describe("Dashboard", () => {
   it("handles API error gracefully", async () => {
     vi.mocked(getTasks).mockRejectedValue(new Error("API Error"));
     
-    render(<Dashboard />);
+    render(<BrowserRouter><Dashboard /></BrowserRouter>);
     
     await waitFor(() => {
       expect(screen.queryByText("Loading Tasks...")).not.toBeInTheDocument();
@@ -288,7 +289,7 @@ describe("Dashboard", () => {
   });
 
   it("closes task form when Cancel is clicked", async () => {
-    render(<Dashboard />);
+    render(<BrowserRouter><Dashboard /></BrowserRouter>);
     
     const newTaskButton = screen.getByText("+ New Task");
     await user.click(newTaskButton);
@@ -301,7 +302,7 @@ describe("Dashboard", () => {
   });
 
   it("closes edit form when Cancel is clicked", async () => {
-    render(<Dashboard />);
+    render(<BrowserRouter><Dashboard /></BrowserRouter>);
     
     await waitFor(() => {
       expect(screen.getAllByText("Edit")).toHaveLength(2);

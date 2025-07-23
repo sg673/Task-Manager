@@ -1,6 +1,7 @@
 import { Task } from "../types/task";
 import { getPriorityBg } from "../types/priority";
 import { MAX_DESC_LENGTH, MAX_TITLE_LENGTH } from "../types/constants";
+import { useNavigate } from "react-router-dom";
 
 interface TaskCardProps {
   task: Task;
@@ -15,6 +16,7 @@ interface TaskCardProps {
  * @returns {JSX.Element} The rendered task card
  */
 export default function TaskCard({ task, onEdit, onDelete }: TaskCardProps) {
+  const navigate = useNavigate();
   /**
    * Calculates and formats the time remaining until a due date
    * 
@@ -61,9 +63,19 @@ export default function TaskCard({ task, onEdit, onDelete }: TaskCardProps) {
       </div>
       
       <div className="mt-auto flex items-center justify-between">
-        <p className="text-xs text-gray-500 mb-1 mx-1 italic">
-          {task.status as string}
-        </p>
+        <div className="flex items-center">
+          <p className="text-xs text-gray-500 mb-1 mx-1 italic">
+            {task.status as string}
+          </p>
+          {task.projectId && (
+            <button 
+              onClick={() => navigate(`/projects/${task.projectId}`)}
+              className="ml-2 text-xs text-indigo-600 hover:text-indigo-800 hover:underline"
+            >
+              View Project
+            </button>
+          )}
+        </div>
         <div className="flex gap-2">
           <button
             className="px-3 py-1 bg-blue-600 text-white text-sm rounded-lg hover:bg-blue-700 transition hover:scale-105"
