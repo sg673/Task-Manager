@@ -31,29 +31,14 @@ export default function TaskCard({ task, onEdit, onDelete }: TaskCardProps) {
   }
 
   /**
-   * Truncates description text if it exceeds maximum length
+   * Truncates a string and adds ... to the end if its more than the max length
    * 
-   * @param {string} desc - The description text
-   * @returns {string} Truncated description with ellipsis if needed
+   * @param {string} string string to be formatted
+   * @param {number} maxLength maximum length of the string 
+   * @returns {string} The string, truncated if necessary
    */
-  function formatDesc(desc: string): string {
-    if (desc) {
-      return (desc.length > MAX_DESC_LENGTH) ? desc.slice(0, MAX_DESC_LENGTH) + "..." : desc;
-    }
-    return "";
-  }
-
-  /**
-   * Truncates title text if it exceeds maximum length
-   * 
-   * @param {string} title - The title text
-   * @returns {string} Truncated title with ellipsis if needed
-   */
-  function formatTitle(title: string): string {
-    if (title) {
-      return (title.length > MAX_TITLE_LENGTH) ? title.slice(0, MAX_TITLE_LENGTH) + "..." : title;
-    }
-    return "";
+  function formatString(string:string, maxLength:number):string{
+    return (string.length > maxLength) ? string.slice(0,maxLength) + "..." : string;
   }
 
   return (
@@ -61,9 +46,9 @@ export default function TaskCard({ task, onEdit, onDelete }: TaskCardProps) {
       className={`shadow-md rounded-2xl p-4 flex flex-col justify-between ${getPriorityBg(task.priority)}`}
     >
       <div>
-        <h3 className="text-xl font-semibold mb-2">{formatTitle(task.title)}</h3>
+        <h3 className="text-xl font-semibold mb-2">{formatString(task.title,MAX_TITLE_LENGTH)}</h3>
         {task.description && (
-          <p className="text-gray-700 mb-3 text-sm break-words">{formatDesc(task.description)}</p>
+          <p className="text-gray-700 mb-3 text-sm break-words">{formatString(task.description,MAX_DESC_LENGTH)}</p>
         )}
         <p className="text-xs text-gray-500 mb-2 capitalize">
           Priority: {task.priority}

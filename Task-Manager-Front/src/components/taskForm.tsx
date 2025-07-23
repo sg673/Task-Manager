@@ -166,7 +166,6 @@ export default function TaskForm({onSubmit,onClose,initialTask}: TaskFormProps){
                             >{priorityValue}</button>
                         ))}
                     </div>
-
                 </label>
                 {/**Action buttons */}
                 <div className="flex justify-end gap-3">

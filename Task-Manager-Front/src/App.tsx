@@ -35,7 +35,6 @@ function AppRoutes(){
 
       </Routes>
     </>
-
   );
 }
 /**
@@ -45,14 +44,12 @@ function AppRoutes(){
  */
 function App() {
   
-
   return (
     <AuthProvider>
       <BrowserRouter>
         <AppRoutes/>
       </BrowserRouter>
-    </AuthProvider>
-    
+    </AuthProvider>  
   )
 }
 

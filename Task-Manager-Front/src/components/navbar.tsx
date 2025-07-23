@@ -63,7 +63,7 @@ export default function Navbar(){
                      >Logout</button>
                 </div>
 
-                {/**navlinks mobile (hamburger) */}
+                {/**Navlinks mobile (hamburger) */}
                 <div className="relative">
                     <button
                         onClick={toggleMenu}

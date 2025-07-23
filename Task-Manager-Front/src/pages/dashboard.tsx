@@ -45,13 +45,10 @@ export default function Dashboard(){
         const priorityOrder = Object.values(Priority);
         return [...tasks].sort((a,b) => {
             if(sortKey === SortKey.Title) return a.title.localeCompare(b.title);
-            if(sortKey === SortKey.Priority) return priorityOrder.indexOf(b.priority) - priorityOrder.indexOf(a.priority)
-            if(sortKey === SortKey.DueDate) return new Date(a.dueDate || 0).getTime() - new Date(b.dueDate || 0).getTime();
-            return 0; // Default case, no sorting
+            if(sortKey === SortKey.Priority) return priorityOrder.indexOf(b.priority) - priorityOrder.indexOf(a.priority);
+            else return new Date(a.dueDate || 0).getTime() - new Date(b.dueDate || 0).getTime(); // Order by date by default
         });
     }
-
-
 
     /**
      * Handles task creation by generating an ID and calling the API
@@ -65,7 +62,6 @@ export default function Dashboard(){
             id: crypto.randomUUID(), // USE BACKEND ID WHEN MADE
         };
         return await addTask(newTask) ? toast.success("Task Created!") : toast.error("Failed to create task");
-        //setTasks([...prev,newTask])
     }
 
     /**
@@ -79,13 +75,6 @@ export default function Dashboard(){
         // eslint-disable-next-line @typescript-eslint/no-unused-expressions
         await deleteTask(id) ? toast.success("Task deleted successfully") : toast.error("Failed to delete task");
         return;
-        /*try {
-            setTasks(tasks.filter((t) => t.id !== id));
-            toast.success("Task deleted successfully");
-        } catch (error) {
-            console.error("Failed to delete task", error);
-            toast.error("Failed to delete task");
-        }*/
     }
     
     /**
@@ -99,16 +88,7 @@ export default function Dashboard(){
         await updateTask(task) ? toast.success("Task updated successfully") : toast.error("Failed to update task");
         setEditingTask(null);
         return;
-    }
-    
-    /*const handleUpdateTask = (updatedTask : Task) => {
-        setTasks((prev) => 
-
-        prev.map((task) => (task.id === updatedTask.id ? updatedTask : task))
-        );
-        setEditingTask(null);
-    };*/
-    
+    }    
 
     return(
         <div className="min-h-screen bg-gray-100 p-6">
@@ -137,24 +117,21 @@ export default function Dashboard(){
                     </select>
                 </div>
 
-
                 {loading ? (
                     <p className="text-gray-500">Loading Tasks...</p>
                 ) : tasks.length === 0 ? (
                     <p className="text-gray-500">No Tasks Found. Create One!</p>
                 ) : (
-                        <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-                            {sortedTasks().map((task) => (
-                                <TaskCard
-                                    key={task.id}
-                                    task={task}
-                                    onEdit={setEditingTask}
-                                    onDelete={handleDeleteTask}
-                                />
-                            ))}
-                        </div>
-
-                     
+                    <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+                        {sortedTasks().map((task) => (
+                            <TaskCard
+                                key={task.id}
+                                task={task}
+                                onEdit={setEditingTask}
+                                onDelete={handleDeleteTask}
+                            />
+                        ))}
+                    </div>
                 )}
             </div>
             {editingTask && (
@@ -166,11 +143,9 @@ export default function Dashboard(){
                     onClose={() => setEditingTask(null)}
                 ></TaskForm>
             )}
-            
             {showForm && (
                 <TaskForm onSubmit={handleCreateTask} onClose={() => setShowForm(false)}/>
             )}
         </div>
-
     );
 }

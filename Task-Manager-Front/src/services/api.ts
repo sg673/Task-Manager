@@ -38,7 +38,6 @@ const mockUser: User = {
 //MOCK API CALLS
 //800ms delay added to all returns to simulate network delay
 
-
 /**
  * Retrieves all tasks from the API
  * 

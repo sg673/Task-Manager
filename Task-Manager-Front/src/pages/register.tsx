@@ -37,7 +37,7 @@ export default function Register() {
     async function handleSubmit(e: React.FormEvent){
         e.preventDefault();
         if(formData.password !== formData.confirmPassword){
-            toast.error("Passwords dont match");
+            toast.error("Passwords don't match");
             return;
         }
         setIsLoading(true);

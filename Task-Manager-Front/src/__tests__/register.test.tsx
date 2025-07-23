@@ -65,19 +65,16 @@ describe('Register Component', () => {
 
   it('validates password length', async () => {
     render(<Register />);
-    
     const passwordInput = screen.getByLabelText(/^password/i);
     
     // Test short password
     fireEvent.change(passwordInput, { target: { name: 'password', value: 'short' } });
-    
     await waitFor(() => {
       expect(screen.getByText(/password must be between 8 and 20 characters/i)).toBeInTheDocument();
     });
     
     // Test valid password
     fireEvent.change(passwordInput, { target: { name: 'password', value: 'validpassword123' } });
-    
     await waitFor(() => {
       expect(screen.queryByText(/password must be between 8 and 20 characters/i)).not.toBeInTheDocument();
     });
@@ -94,14 +91,12 @@ describe('Register Component', () => {
     
     // Set non-matching confirmation
     fireEvent.change(confirmPasswordInput, { target: { name: 'confirmPassword', value: 'different123' } });
-    
     await waitFor(() => {
       expect(screen.getByText(/passwords do not match/i)).toBeInTheDocument();
     });
     
     // Set matching confirmation
     fireEvent.change(confirmPasswordInput, { target: { name: 'confirmPassword', value: 'password123' } });
-    
     await waitFor(() => {
       expect(screen.queryByText(/passwords do not match/i)).not.toBeInTheDocument();
     });
@@ -122,7 +117,7 @@ describe('Register Component', () => {
     fireEvent.click(screen.getByRole('button', { name: /register/i }));
     
     await waitFor(() => {
-      expect(toast.error).toHaveBeenCalledWith('Passwords dont match');
+      expect(toast.error).toHaveBeenCalledWith("Passwords don't match");
       expect(registerUser).not.toHaveBeenCalled();
     });
   });
