@@ -91,21 +91,21 @@
   - [x] Connect logout button in navbar.tsx
   - [x] Set up protectedRoute.tsx component
 
-- [ ] Develop project organization features
-  - [ ] Complete project.tsx page
-  - [ ] Create project creation interface
-  - [ ] Implement task assignment to projects
-  - [ ] Add projectId field to task creation/editing
+- [x] Develop project organization features
+  - [x] Complete project.tsx page
+  - [x] Create project creation interface
+  - [x] Implement task assignment to projects
+  - [x] Add projectId field to task creation/editing
 
 - [ ] Enhance API service
   - [ ] Replace mock API with real backend calls
   - [ ] Implement error handling for API requests
   - [ ] Add authentication headers to requests
 
-- [ ] Create sidebar component
-  - [ ] List projects in sidebar
-  - [ ] Add project filtering functionality
-  - [ ] Implement collapsible sidebar for mobile
+- [x] Create sidebar component
+  - [x] List projects in sidebar
+  - [x] Add project filtering functionality
+  - [x] Implement collapsible sidebar for mobile
 
 - [ ] Implement Kanban board view
   - [ ] Create drag and drop functionality

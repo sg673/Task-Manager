@@ -11,12 +11,13 @@ Task-Manager is a responsive web application designed to help individuals and te
 ### Current Features
 - **Task Management**: Create, view, update, and delete tasks with detailed properties
 - **Task Properties**: Organize tasks with titles, descriptions, due dates, priorities, and status
+- **Project Organization**: Group tasks by user-created projects
+- **Sidebar Navigation**: Easy access to projects and application sections
 - **Responsive Design**: Fully functional on both desktop and mobile devices
 - **Modern UI**: Clean interface built with React and Tailwind CSS
 
 ### Upcoming Features
 - **User Authentication**: Secure login, registration, and profile management
-- **Project Organization**: Group tasks by user-created projects
 - **Kanban Board**: Visual task management with drag-and-drop functionality
 - **Task Filtering**: Sort and filter tasks by various properties
 - **Collaboration**: Share projects and assign tasks to team members
