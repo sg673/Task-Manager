@@ -3,6 +3,7 @@ import './App.css'
 import Dashboard from './pages/dashboard'
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
 import Navbar from './components/navbar'
+import Sidebar from './components/sidebar'
 import Profile from './pages/profile'
 import Project from './pages/project'
 import { useAuth } from './hooks/useAuth'
@@ -24,16 +25,20 @@ function AppRoutes(){
     <>
       {user && <Navbar/>}
       <Toaster position='top-right' toastOptions={{duration:2000}}/>
-      <Routes>
-        <Route path="/">
-          <Route path="login" element={user ? <Navigate to="/dashboard"/> : <Login/>}/>
-          <Route path="register" element={user ? <Navigate to="/dashboard"/> : <Register/>}/>
-          <Route path="dashboard" element={<ProtectRoute><Dashboard/></ProtectRoute>} />
-          <Route path="projects" element={<ProtectRoute><Project/></ProtectRoute>} />
-          <Route path="profile" element={<ProtectRoute><Profile/></ProtectRoute>}/>
-        </Route>
-
-      </Routes>
+      <div className="flex">
+        {user && <Sidebar />}
+        <div className={`flex-1  transition-all duration-300`}>
+          <Routes>
+            <Route path="/">
+              <Route path="login" element={user ? <Navigate to="/dashboard"/> : <Login/>}/>
+              <Route path="register" element={user ? <Navigate to="/dashboard"/> : <Register/>}/>
+              <Route path="dashboard" element={<ProtectRoute><Dashboard/></ProtectRoute>} />
+              <Route path="projects/:projectId" element={<ProtectRoute><Project/></ProtectRoute>} />
+              <Route path="profile" element={<ProtectRoute><Profile/></ProtectRoute>}/>
+            </Route>
+          </Routes>
+        </div>
+      </div>
     </>
   );
 }
