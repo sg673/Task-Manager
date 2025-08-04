@@ -2,9 +2,11 @@ import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { Project as ProjectType } from "../types/project";
 import { Task } from "../types/task";
-import { getProjectById, getTasksByProject, deleteProject, updateProject } from "../services/api";
+import { getProjectById, getTasksByProject, deleteProject, updateProject, addTask } from "../services/api";
 import { Loader2, Edit2, Trash2, Plus } from "lucide-react";
 import TaskCard from "../components/taskCard";
+import toast from "react-hot-toast";
+import TaskForm from "../components/taskForm";
 
 /**
  * Project page component that displays project details and associated tasks
@@ -23,6 +25,7 @@ export default function Project() {
     description: "",
     color: ""
   });
+  const [showTaskForm,setShowTaskForm] = useState(false);
 
   useEffect(() => {
     const fetchProjectData = async () => {
@@ -133,6 +136,18 @@ export default function Project() {
       }
     }
   };
+
+  const handleCreateTask = async (task: Omit<Task,"id">) => {
+    try {
+      const newTask = {...task,id:Date.now().toString()};
+      await addTask(newTask);
+      setTasks([...tasks,newTask]);
+      toast.success("Task Created");
+    } catch(error){
+      console.error("Failed to create task:",error)
+      toast.error("Failed to create task")
+    }
+  }
 
   if (loading) {
     return (
@@ -261,7 +276,7 @@ export default function Project() {
         <div className="flex items-center justify-between mb-4">
           <h2 className="text-xl font-semibold">Tasks</h2>
           <button
-            onClick={() => navigate(`/task/new?projectId=${project.id}`)}
+            onClick={() => setShowTaskForm(true)}
             className="flex items-center px-3 py-1.5 bg-indigo-600 text-white rounded-md hover:bg-indigo-700"
           >
             <Plus size={16} className="mr-1" />
@@ -273,7 +288,7 @@ export default function Project() {
           <div className="bg-white p-6 rounded-lg shadow text-center">
             <p className="text-gray-500">No tasks in this project yet.</p>
             <button
-              onClick={() => navigate(`/task/new?projectId=${project.id}`)}
+              onClick={() => setShowTaskForm(true)}
               className="mt-4 px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700"
             >
               Create your first task
@@ -292,6 +307,13 @@ export default function Project() {
           </div>
         )}
       </div>
+      {showTaskForm && (
+        <TaskForm
+          onSubmit={handleCreateTask}
+          onClose={() => setShowTaskForm(false)}
+          defaultProjectId={project.id}
+        />
+      )}
     </div>
   );
 }
