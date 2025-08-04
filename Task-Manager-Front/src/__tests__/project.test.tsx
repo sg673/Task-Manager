@@ -11,7 +11,9 @@ vi.mock('../services/api', () => ({
   getProjectById: vi.fn(),
   getTasksByProject: vi.fn(),
   updateProject: vi.fn(),
-  deleteProject: vi.fn()
+  deleteProject: vi.fn(),
+  addTask: vi.fn(),
+  getProjects: vi.fn()
 }));
 
 // Mock useParams and useNavigate
@@ -38,6 +40,7 @@ describe('Project Component', () => {
     });
     
     vi.mocked(api.getTasksByProject).mockResolvedValue([]);
+    vi.mocked(api.addTask).mockResolvedValue(true);
   });
 
   it('displays project details after loading', async () => {
@@ -94,4 +97,57 @@ describe('Project Component', () => {
     expect(screen.getByLabelText('Project Name')).toHaveValue('Test Project');
     expect(screen.getByLabelText('Description')).toHaveValue('Test Description');
   });
+
+  it('opens TaskForm when Add Task button is clicked', async () => {
+  const user = userEvent.setup();
+  
+  render(
+    <BrowserRouter>
+      <Project />
+    </BrowserRouter>
+  );
+  
+  await waitFor(() => {
+    expect(screen.getByText('Test Project')).toBeInTheDocument();
+  });
+  
+  const addTaskButton = screen.getByText('Add Task');
+  await user.click(addTaskButton);
+  
+  expect(screen.getByText('New Task')).toBeInTheDocument();
+  expect(screen.getByPlaceholderText('Task Title')).toBeInTheDocument();
+});
+
+  it('creates task with correct project ID when TaskForm is submitted', async () => {
+    const user = userEvent.setup();
+    
+    render(
+      <BrowserRouter>
+        <Project />
+      </BrowserRouter>
+    );
+    
+    await waitFor(() => {
+      expect(screen.getByText('Test Project')).toBeInTheDocument();
+    });
+    
+    const addTaskButton = screen.getByText('Add Task');
+    await user.click(addTaskButton);
+    
+    const titleInput = screen.getByPlaceholderText('Task Title');
+    await user.type(titleInput, 'New Test Task');
+    
+    const createButton = screen.getByText('Create');
+    await user.click(createButton);
+    
+    await waitFor(() => {
+      expect(api.addTask).toHaveBeenCalledWith(
+        expect.objectContaining({
+          title: 'New Test Task',
+          projectId: '1'
+        })
+      );
+    });
+  });
+
 });

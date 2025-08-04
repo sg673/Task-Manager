@@ -2,7 +2,7 @@ import { describe, expect, it, vi, beforeEach, afterEach } from "vitest";
 import { render, screen, fireEvent, waitFor, act } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import Dashboard from "../pages/dashboard";
-import { getTasks, addTask, deleteTask, updateTask } from "../services/api";
+import { getTasks, addTask, deleteTask, updateTask, getProjects } from "../services/api";
 import { Priority } from "../types/priority";
 import { Status } from "../types/status";
 import { SortKey } from "../types/task";
@@ -45,6 +45,15 @@ describe("Dashboard", () => {
     vi.mocked(addTask).mockResolvedValue(true);
     vi.mocked(deleteTask).mockResolvedValue(true);
     vi.mocked(updateTask).mockResolvedValue(true);
+    vi.mocked(getProjects).mockResolvedValue([
+      {
+        id: '1',
+        name: 'Test Project',
+        description: 'Test Description',
+        color: '#4f46e5',
+        createdAt: '2023-01-01T00:00:00.000Z'
+      }
+    ])
   });
 
   afterEach(() => {
@@ -242,6 +251,7 @@ describe("Dashboard", () => {
       description: "New task description",
       dueDate: undefined,
       id: expect.any(String),
+      projectId:"",
       status: Status.PENDING,
       priority: Priority.None,
     });
@@ -273,6 +283,7 @@ describe("Dashboard", () => {
       title: "Updated Task 1",
       description: "Updated description 1",
       dueDate: "2025-12-31T23:59:00.000Z",
+      projectId: "",
       status: Status.PENDING,
       priority: Priority.High,
     });

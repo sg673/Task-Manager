@@ -1,15 +1,38 @@
-import { describe, expect, it, vi } from "vitest";
+import { beforeEach, describe, expect, it, vi } from "vitest";
 import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import TaskForm from "../components/taskForm";
+import * as api from '../services/api';
 import { Priority } from "../types/priority";
 import { Status } from "../types/status";
 import '@testing-library/jest-dom/vitest';
+
+
+vi.mock('../services/api', () => ({
+  getProjectById: vi.fn(),
+  getTasksByProject: vi.fn(),
+  updateProject: vi.fn(),
+  deleteProject: vi.fn(),
+  addTask: vi.fn(),
+  getProjects: vi.fn()
+}));
 
 describe("TaskForm", () => {
   const mockOnSubmit = vi.fn();
   const mockOnClose = vi.fn();
   const user = userEvent.setup();
+
+  beforeEach(() =>{
+        vi.mocked(api.getProjects).mockResolvedValue([
+           {
+                id: '1',
+                name: 'Test Project',
+                description: 'Test Description',
+                color: '#4f46e5',
+                createdAt: '2023-01-01T00:00:00.000Z'
+              }
+        ]);
+  })
   
   it("renders new task form correctly", () => {
     render(<TaskForm onSubmit={mockOnSubmit} onClose={mockOnClose} />);
@@ -116,7 +139,8 @@ describe("TaskForm", () => {
       description: "New task description",
       status: Status.PENDING,
       priority: Priority.Medium,
-      dueDate: undefined
+      dueDate: undefined,
+      projectId:""
     });
     expect(mockOnClose).toHaveBeenCalled();
   });
