@@ -2,11 +2,14 @@ import { useState, useRef, useEffect } from "react";
 import { Task } from "../types/task";
 import { Priority } from "../types/priority";
 import { Status } from "../types/status";
+import { Project } from "../types/project";
+import { getProjects } from "../services/api";
 
 interface TaskFormProps{
     onSubmit: (task:Omit<Task,"id">) => void;
     onClose: () => void;
     initialTask? : Task;
+    defaultProjectId? : string;
 }
 
 /**
@@ -16,9 +19,10 @@ interface TaskFormProps{
  * @param {Function} props.onSubmit - Function to call when form is submitted
  * @param {Function} props.onClose - Function to call when form is closed
  * @param {Task} [props.initialTask] - Initial task data for editing mode
+ * @param {string} [props.defaultProjectId] - Default project to prepopulate field
  * @returns {JSX.Element} The rendered form
  */
-export default function TaskForm({onSubmit,onClose,initialTask}: TaskFormProps){
+export default function TaskForm({onSubmit,onClose,initialTask,defaultProjectId}: TaskFormProps){
     const [title, setTitle] = useState(initialTask?.title ?? "");
     const [description, setDescription] = useState(initialTask?.description ?? "");
     const [priority, setPriority] = useState<Priority>(initialTask?.priority ?? Priority.None);
@@ -26,6 +30,8 @@ export default function TaskForm({onSubmit,onClose,initialTask}: TaskFormProps){
     const [dueTime, setDueTime] = useState(initialTask?.dueDate ? 
         initialTask.dueDate.split('T')[1].substring(0, 5) : "");
     const [showTimeSelector, setShowTimeSelector] = useState(false);
+    const [projects,setProjects] = useState<Project[]>([]);
+    const [projectId,setProjectId] = useState(initialTask?.projectId ?? defaultProjectId ?? "");
     
     // Generate time options in 30-minute intervals
     const timeOptions = [];
@@ -48,6 +54,7 @@ export default function TaskForm({onSubmit,onClose,initialTask}: TaskFormProps){
         }
         
         document.addEventListener("mousedown", handleClickOutside);
+        getProjects().then(setProjects).catch(console.error);
         return () => document.removeEventListener("mousedown", handleClickOutside);
     }, []);
 
@@ -69,7 +76,8 @@ export default function TaskForm({onSubmit,onClose,initialTask}: TaskFormProps){
             description,
             status: Status.PENDING,
             priority,
-            dueDate: dueDateTimeISO
+            dueDate: dueDateTimeISO,
+            projectId
         });
         onClose();
     }
@@ -102,6 +110,23 @@ export default function TaskForm({onSubmit,onClose,initialTask}: TaskFormProps){
                         onChange={(e) => setDescription(e.target.value)}
                         placeholder="Task Description"
                     />
+                </label>
+                {/**Project */}
+                <label className="block mb-2">
+                    <span className="text-sm text-gray-700 font-semibold">Project</span>
+                    <select
+                        className="mt-1 w-full border border-gray-300 rounded px-3 py-2"
+                        value={projectId}
+                        onChange={(e) => setProjectId(e.target.value)}
+                    >
+                        <option value="">No Project</option>
+                        {projects.map((project) =>(
+                            <option key={project.id} value = {project.id}>
+                                {project.name}
+                            </option>
+                        ))}
+
+                    </select>
                 </label>
                 {/**Due Date and Time */}
                 <div className="block mb-2">
