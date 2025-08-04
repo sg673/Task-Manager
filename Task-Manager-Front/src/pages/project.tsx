@@ -37,10 +37,18 @@ export default function Project() {
           color: "#4f46e5",
           createdAt: new Date().toISOString()
         });
+        setEditForm({
+          name:"",
+          description:"",
+          color:""
+        })
         setTasks([]);
         setLoading(false);
         setIsEditing(true);
         return;
+      }
+      else{
+        setIsEditing(false);
       }
 
       try {
