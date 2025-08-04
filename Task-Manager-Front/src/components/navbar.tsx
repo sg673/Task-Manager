@@ -34,7 +34,7 @@ export default function Navbar(){
     }
 
     return (
-        <nav className="bg-gray-100 shadow-sm px-6 py-4 sticky top-0 z-50">
+        <nav className="bg-gray-100 shadow-sm px-6 py-4 sticky top-0">
             <div className="max-w-6xl mx-auto flex justify-between items-center">
                 {/**BRAND */}
                 <Link
