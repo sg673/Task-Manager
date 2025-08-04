@@ -54,7 +54,13 @@ export default function TaskForm({onSubmit,onClose,initialTask,defaultProjectId}
         }
         
         document.addEventListener("mousedown", handleClickOutside);
-        getProjects().then(setProjects).catch(console.error);
+
+        async function loadProjects(){
+             setProjects(await getProjects());
+
+        }
+
+        loadProjects()
         return () => document.removeEventListener("mousedown", handleClickOutside);
     }, []);
 
@@ -120,7 +126,7 @@ export default function TaskForm({onSubmit,onClose,initialTask,defaultProjectId}
                         onChange={(e) => setProjectId(e.target.value)}
                     >
                         <option value="">No Project</option>
-                        {projects.map((project) =>(
+                        {projects && projects.map((project) =>(
                             <option key={project.id} value = {project.id}>
                                 {project.name}
                             </option>
