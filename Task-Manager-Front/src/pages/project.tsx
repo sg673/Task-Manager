@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { Project as ProjectType } from "../types/project";
 import { Task } from "../types/task";
-import { getProjectById, getTasksByProject, deleteProject, updateProject, addTask } from "../services/api";
+import { getProjectById, getTasksByProject, deleteProject, updateProject, addTask, deleteTask, updateTask } from "../services/api";
 import { Loader2, Edit2, Trash2, Plus } from "lucide-react";
 import TaskCard from "../components/taskCard";
 import toast from "react-hot-toast";
@@ -129,18 +129,19 @@ export default function Project() {
     }
   };
 
-  const handleEditTask = (task: Task) => {
-    navigate(`/task/${task.id}`);
+  const handleEditTask = async  (task: Task) => {
+    // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+    await updateTask(task) ? toast.success("Task updated successfully") : toast.error("Failed to update task");
+        return;
   };
 
   const handleDeleteTask = async (taskId: string) => {
     if (window.confirm("Are you sure you want to delete this task?")) {
       try {
-        // Remove the task from the local state
-        setTasks(tasks.filter(task => task.id !== taskId));
-        // In a real app, you would call an API to delete the task
+        await deleteTask(taskId);
       } catch (error) {
         console.error("Failed to delete task:", error);
+        toast.error("Failed to delete Task")
       }
     }
   };
